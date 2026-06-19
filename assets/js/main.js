@@ -195,6 +195,12 @@
       confirmCount: document.querySelector('[data-confirm-count]'),
       confirmTotal: document.querySelector('[data-confirm-total]'),
       confirmStatusLink: document.querySelector('[data-confirm-status-link]'),
+      logo: document.querySelector('.home-hero-logo'),
+      adminLoginModal: document.querySelector('[data-admin-login-modal]'),
+      closeAdminLoginModal: document.querySelector('[data-close-admin-login-modal]'),
+      adminLoginForm: document.querySelector('[data-admin-login-form]'),
+      adminPasswordInput: document.querySelector('[data-admin-login-form] input[name="password"]'),
+      adminPasswordError: document.querySelector('[data-admin-login-modal] [data-error-for="password"]'),
     };
 
     function getPickedList() {
@@ -680,6 +686,48 @@ function sendTelegramNotification(response, name, phone, date, slots, total) {
       sendTelegramNotification(response, bookings[0]?.name || fallbackName, phone, thaiDate(state.selectedDate), bookings, total);
 
       show(els.confirmModal);
+    }
+    function openAdminLogin() {
+      if (els.adminLoginForm) els.adminLoginForm.reset();
+      if (els.adminPasswordInput) els.adminPasswordInput.classList.remove('invalid');
+      if (els.adminPasswordError) els.adminPasswordError.textContent = '';
+      show(els.adminLoginModal);
+      window.setTimeout(() => {
+        if (els.adminPasswordInput) els.adminPasswordInput.focus();
+      }, 50);
+    }
+
+    function closeAdminLogin() {
+      hide(els.adminLoginModal);
+    }
+
+    function submitAdminLogin(event) {
+      event.preventDefault();
+      if (!els.adminPasswordInput) return;
+      const password = els.adminPasswordInput.value;
+      if (password === '55555') {
+        window.location.href = 'admin-panel.html';
+      } else {
+        els.adminPasswordInput.classList.add('invalid');
+        if (els.adminPasswordError) {
+          els.adminPasswordError.textContent = 'รหัสผ่านไม่ถูกต้อง';
+        }
+      }
+    }
+
+    if (els.logo) {
+      els.logo.addEventListener('click', openAdminLogin);
+    }
+    if (els.closeAdminLoginModal) {
+      els.closeAdminLoginModal.addEventListener('click', closeAdminLogin);
+    }
+    if (els.adminLoginModal) {
+      els.adminLoginModal.addEventListener('click', (event) => {
+        if (event.target === els.adminLoginModal) closeAdminLogin();
+      });
+    }
+    if (els.adminLoginForm) {
+      els.adminLoginForm.addEventListener('submit', submitAdminLogin);
     }
 
     els.prevMonth.addEventListener('click', () => changeMonth(-1));

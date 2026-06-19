@@ -160,6 +160,28 @@
     </section>
   </div>
 
+  <div class="modal-overlay" data-admin-login-modal hidden>
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="admin-login-modal-title">
+      <h2 id="admin-login-modal-title">เข้าสู่ระบบผู้ดูแลระบบ</h2>
+      <p class="modal-date">กรุณากรอกรหัสผ่านเพื่อเข้าสู่ Admin Panel</p>
+
+      <form class="booking-form" data-admin-login-form autocomplete="off" novalidate>
+        <label class="field">
+          <span>รหัสผ่าน *</span>
+          <input type="password" name="password" placeholder="กรอกรหัสผ่าน" required>
+          <small class="field-error" data-error-for="password"></small>
+        </label>
+
+        <p class="form-message" data-admin-login-message></p>
+
+        <div class="btn-row">
+          <button class="btn btn-muted" type="button" data-close-admin-login-modal>ยกเลิก</button>
+          <button class="btn btn-primary" type="submit" data-submit-admin-login>ยืนยัน</button>
+        </div>
+      </form>
+    </section>
+  </div>
+
   <script src="firebase-config.js"></script>
   <script src="assets/js/main.js?v=confirmed-only-20260619"></script>
 </body>

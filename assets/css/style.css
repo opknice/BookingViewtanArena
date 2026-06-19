@@ -221,6 +221,13 @@ a {
   mix-blend-mode: screen;
   opacity: 0.9;
   filter: drop-shadow(0 8px 24px rgb(0 0 0 / 0.38));
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.home-hero-logo:hover {
+  transform: scale(1.03);
+  opacity: 1;
 }
 
 .booking-grid {
