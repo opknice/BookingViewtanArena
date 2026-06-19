@@ -561,6 +561,45 @@
       }
     }
 
+
+    // ===== TELEGRAM NOTIFICATION =====
+function sendTelegramNotification(response, name, phone, date, slots, total) {
+  const WORKER_URL = 'https://telegram-notifier.thanakrit-kas.workers.dev';
+
+  const slotLines = mergeSlotRanges(slots)
+    .map((s) => `  • ${s.startTime} - ${s.endTime} (${money(s.price)} บาท)`)
+    .join('\n');
+
+  const message =
+    `🔔 *มีการจองใหม่!*\n` +
+    `━━━━━━━━━━━━━━━\n` +
+    `📌 รหัส: #${response.groupId}\n` +
+    `👤 ชื่อ: ${name}\n` +
+    `📞 โทร: ${phone}\n` +
+    `📅 วันที่: ${date}\n` +
+    `⏰ ช่วงเวลา:\n${slotLines}\n` +
+    `━━━━━━━━━━━━━━━\n` +
+    `💰 รวม: ${money(total)} บาท\n` +
+    `🔄 สถานะ: รอตรวจสอบ`;
+
+  fetch(WORKER_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ message }),
+  })
+    .then((r) => r.json())
+    .then((result) => {
+      if (result.ok) {
+        console.log('✅ แจ้งเตือน Telegram สำเร็จ');
+      } else {
+        console.warn('⚠️ Telegram ตอบกลับ:', result);
+      }
+    })
+    .catch((err) => console.warn('⚠️ ส่ง Telegram ไม่ได้:', err.message));
+}
+// ===== END TELEGRAM NOTIFICATION =====
+
+
     function showConfirm(response, fallbackName, phone) {
       const bookings = response.bookings || [];
       const total = Number(response.totalPrice || bookings.reduce((sum, booking) => sum + Number(booking.price || 0), 0));
@@ -577,9 +616,12 @@
         els.confirmSlots.appendChild(item);
       });
 
-      els.confirmCount.textContent = `รวม ${bookings.length} ช่วงเวลา`;
+      els.confirmCount.textContent = `รวม`;
       els.confirmTotal.textContent = `${money(total)} บาท`;
       els.confirmStatusLink.href = `check-status.html?phone=${encodeURIComponent(phone)}`;
+
+      sendTelegramNotification(response, bookings[0]?.name || fallbackName, phone, thaiDate(state.selectedDate), bookings, total);
+
       show(els.confirmModal);
     }
 
