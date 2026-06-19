@@ -15,7 +15,7 @@
   const PRICE_DAY = 800;
   const PRICE_NIGHT = 1000;
   const SLOT_MINUTES = 30;
-  const OPEN_MINUTE = 6 * 60;
+  const OPEN_MINUTE = 16 * 60;
   const CLOSE_MINUTE = 24 * 60;
 
   function isConfigured() {

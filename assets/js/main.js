@@ -8,7 +8,7 @@
   const THAI_DAYS_SHORT = ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส'];
   const THAI_DAYS_FULL = ['อาทิตย์', 'จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์'];
 
-  const OPEN_MINUTE = 6 * 60;
+  const OPEN_MINUTE = 16 * 60;
   const CLOSE_MINUTE = 24 * 60;
   const SLOT_MINUTES = 30;
   const PRICE_DAY = 800;
@@ -84,6 +84,27 @@
     return ranges;
   }
 
+  function mergeBookedSlots(bookedSlots) {
+    const sorted = [...(bookedSlots || [])].sort((a, b) => String(a.startTime || '').localeCompare(String(b.startTime || '')));
+    const ranges = [];
+
+    sorted.forEach((slot) => {
+      const last = ranges[ranges.length - 1];
+      if (last && last.endTime === slot.startTime && last.name === slot.name) {
+        last.endTime = slot.endTime;
+        return;
+      }
+
+      ranges.push({
+        startTime: slot.startTime,
+        endTime: slot.endTime,
+        name: slot.name,
+      });
+    });
+
+    return ranges;
+  }
+
   function parseLocalDate(dateKey) {
     const [year, month, day] = dateKey.split('-').map(Number);
     return new Date(year, month - 1, day);
@@ -149,6 +170,7 @@
       selectedDateTitle: document.querySelector('[data-selected-date-title]'),
       availableCount: document.querySelector('[data-available-count]'),
       slotList: document.querySelector('[data-slot-list]'),
+      bookedSummaryList: document.querySelector('[data-booked-summary-list]'),
       summaryBar: document.querySelector('[data-summary-bar]'),
       pickedCount: document.querySelector('[data-picked-count]'),
       summaryBreakdown: document.querySelector('[data-summary-breakdown]'),
@@ -348,6 +370,7 @@
 
         renderSlots();
         renderSummary();
+        renderBookedSummary();
       } catch (error) {
         if (requestId !== state.refreshSequence) return;
 
@@ -361,6 +384,7 @@
           `โหลดข้อมูล Firebase ไม่สำเร็จ: ${error.message || 'กรุณาตรวจสอบ config'}`,
           'empty-state error',
         );
+        renderBookedSummary();
       }
     }
 
@@ -450,6 +474,39 @@
       els.summaryBreakdown.textContent = parts.join(' | ');
 
       show(els.summaryBar);
+    }
+
+    function renderBookedSummary() {
+      if (!els.bookedSummaryList) return;
+
+      els.bookedSummaryList.innerHTML = '';
+
+      const bookedList = ALL_SLOTS
+        .filter((slot) => state.bookedMap[slot.startTime])
+        .map((slot) => ({
+          startTime: slot.startTime,
+          endTime: slot.endTime,
+          name: state.bookedMap[slot.startTime].name,
+        }));
+
+      if (bookedList.length === 0) {
+        const emptyDiv = createElement('div', 'booked-summary-empty', 'ยังไม่มีการจองในวันนี้');
+        els.bookedSummaryList.appendChild(emptyDiv);
+        return;
+      }
+
+      const merged = mergeBookedSlots(bookedList);
+
+      merged.forEach((item) => {
+        const row = createElement('div', 'booked-summary-item');
+        
+        const timeSpan = createElement('span', 'booked-summary-time', `${item.startTime} - ${item.endTime} น.`);
+        const nameSpan = createElement('span', 'booked-summary-name', item.name ? `คุณ ${item.name}` : 'ไม่ระบุชื่อ');
+        
+        row.appendChild(timeSpan);
+        row.appendChild(nameSpan);
+        els.bookedSummaryList.appendChild(row);
+      });
     }
 
     function renderModalSummary() {

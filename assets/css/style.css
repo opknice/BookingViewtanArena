@@ -1606,3 +1606,38 @@ a {
     flex-direction: column;
   }
 }
+
+.booked-summary-list {
+  display: grid;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.booked-summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 10px;
+  background: rgb(255 255 255 / 0.85);
+  border-radius: 6px;
+  border-left: 3px solid var(--green);
+  font-size: 13px;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
+}
+
+.booked-summary-time {
+  font-weight: 700;
+  color: var(--green);
+}
+
+.booked-summary-name {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.booked-summary-empty {
+  color: #166534;
+  opacity: 0.8;
+  font-style: italic;
+  margin-top: 4px;
+}
