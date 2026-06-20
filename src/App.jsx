@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { BookingProvider } from './contexts/BookingContext'
-import HomePage from './pages/HomePage'
 import BookingPage from './pages/BookingPage'
 import CheckStatusPage from './pages/CheckStatusPage'
 import TournamentPage from './pages/TournamentPage'
@@ -13,8 +12,7 @@ function App() {
     <BookingProvider>
       <Router>
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/booking" element={<BookingPage />} />
+          <Route path="/" element={<BookingPage />} />
           <Route path="/check-status" element={<CheckStatusPage />} />
           <Route path="/tournament" element={<TournamentPage />} />
           <Route path="/find-team" element={<FindTeamPage />} />

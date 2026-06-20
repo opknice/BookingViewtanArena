@@ -4220,3 +4220,93 @@ rnament-prizes h4,
     padding: 20px;
   }
 }
+
+/* Social Links Tournament - Box Style */
+.social-links-tournament {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.social-link-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: #fff;
+  border: 2px solid transparent;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.social-link-box:hover {
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.social-link-box svg {
+  flex-shrink: 0;
+}
+
+.social-link-box span {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.social-link-box.facebook {
+  background: #1877f2;
+  border-color: #1877f2;
+}
+
+.social-link-box.facebook:hover {
+  background: #0c63d4;
+  border-color: #0c63d4;
+}
+
+.social-link-box.instagram {
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  border-color: #bc1888;
+}
+
+.social-link-box.instagram:hover {
+  opacity: 0.9;
+  box-shadow: 0 4px 16px rgba(188, 24, 136, 0.4);
+}
+
+.social-link-box.tiktok {
+  background: #000;
+  border-color: #000;
+}
+
+.social-link-box.tiktok:hover {
+  background: #333;
+  border-color: #333;
+}
+
+.social-link-box.line {
+  background: #06C755;
+  border-color: #06C755;
+}
+
+.social-link-box.line:hover {
+  background: #05a847;
+  border-color: #05a847;
+}
+
+/* Responsive for Social Links Tournament */
+@media (max-width: 430px) {
+  .social-link-box {
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+  
+  .social-link-box span {
+    font-size: 14px;
+  }
+}

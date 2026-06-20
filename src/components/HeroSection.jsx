@@ -2,8 +2,7 @@ import { Link, useLocation } from 'react-router-dom'
 
 export default function HeroSection({ onAdminClick }) {
   const location = useLocation()
-  const isHomePage = location.pathname === '/'
-  const isBookingPage = location.pathname === '/booking'
+  const isBookingPage = location.pathname === '/'
   const isCheckStatusPage = location.pathname === '/check-status'
   const isTournamentPage = location.pathname === '/tournament'
   const isFindTeamPage = location.pathname === '/find-team'
@@ -21,12 +20,6 @@ export default function HeroSection({ onAdminClick }) {
           <div className="home-hero-links">
             <Link 
               to="/" 
-              className={isHomePage ? 'active' : ''}
-            >
-              หน้าแรก
-            </Link>
-            <Link 
-              to="/booking" 
               className={isBookingPage ? 'active' : ''}
             >
               จองสนาม
