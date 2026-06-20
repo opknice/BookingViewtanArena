@@ -41,18 +41,80 @@ export default function AcademyPage() {
 
     setSubmitting(true)
     
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      const normalizedPhone = normalizePhone(formData.phone)
+      
+      const registrationData = {
+        childName: formData.childName.trim(),
+        ageGroup: formData.ageGroup,
+        parentName: formData.parentName.trim(),
+        phone: normalizedPhone,
+        status: 'pending'
+      }
+      
+      // ส่ง Telegram notification
+      await sendAcademyTelegramNotification(registrationData)
+      
       setSubmitting(false)
       setSubmitted(true)
       setFormData({ childName: '', parentName: '', phone: '', ageGroup: '' })
+      setErrors({})
       
       // Reset after 3 seconds
       setTimeout(() => {
         setSubmitted(false)
         setShowForm(false)
       }, 3000)
-    }, 1000)
+    } catch (error) {
+      console.error('Error submitting registration:', error)
+      setSubmitting(false)
+      setErrors({ submit: 'เกิดข้อผิดพลาดในการส่งข้อมูล กรุณาลองใหม่อีกครั้ง' })
+    }
+  }
+
+  // ฟังก์ชันส่ง Telegram notification สำหรับการสมัคร Academy
+  const sendAcademyTelegramNotification = async (data) => {
+    const WORKER_URL = 'https://telegram-notifier.thanakrit-kas.workers.dev'
+    
+    const timestamp = new Date().toLocaleString('th-TH', {
+      timeZone: 'Asia/Bangkok',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    })
+
+    const message =
+      `⚽ *มีการสมัคร Premier Academy ใหม่!*\n` +
+      `━━━━━━━━━━━━━━━\n` +
+      `👶 ชื่อเด็ก: ${data.childName}\n` +
+      `📊 ช่วงอายุ: ${data.ageGroup} ปี\n` +
+      `👤 ผู้ปกครอง: ${data.parentName}\n` +
+      `📞 โทร: ${data.phone}\n` +
+      `🕐 เวลาสมัคร: ${timestamp}\n` +
+      `━━━━━━━━━━━━━━━\n` +
+      `💰 ค่าเรียน: 1,200 บาท\n` +
+      `📍 สนาม: VAR วิวตาลอารีน่า\n` +
+      `🔄 สถานะ: รอติดต่อกลับ\n` +
+      `━━━━━━━━━━━━━━━\n` +
+      `📝 *กรุณาติดต่อกลับภายใน 1-2 วันทำการ*`
+
+    try {
+      const response = await fetch(WORKER_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message })
+      })
+
+      if (!response.ok) {
+        throw new Error('ส่ง Telegram ไม่สำเร็จ')
+      }
+    } catch (err) {
+      console.warn('⚠️ ส่ง Telegram ไม่ได้:', err.message)
+      // ไม่ throw error ออกมาเพื่อให้ฟอร์มยังแสดงว่าสำเร็จ
+      throw err
+    }
   }
 
   return (
@@ -198,6 +260,12 @@ export default function AcademyPage() {
                   <div className="form-note">
                     <p>📌 หมายเหตุ: หลังจากส่งแบบฟอร์ม ทางโค้ชจะติดต่อกลับภายใน 1-2 วันทำการ</p>
                   </div>
+
+                  {errors.submit && (
+                    <div className="error-message" style={{ color: '#dc3545', padding: '12px', marginBottom: '16px', backgroundColor: '#f8d7da', borderRadius: '4px', textAlign: 'center' }}>
+                      ⚠️ {errors.submit}
+                    </div>
+                  )}
 
                   <div className="btn-row">
                     <button 
