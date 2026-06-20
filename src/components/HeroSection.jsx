@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 export default function HeroSection({ onAdminClick }) {
   return (
     <section className="home-hero">
-      <img className="home-hero-bg" src="/pic/Ball.png" alt="" />
+      <img className="home-hero-bg" src="/Ball.png" alt="" />
       <div className="home-hero-shade"></div>
       <div className="home-hero-inner">
         <div className="home-hero-copy">
@@ -17,7 +17,7 @@ export default function HeroSection({ onAdminClick }) {
         </div>
         <img 
           className="home-hero-logo" 
-          src="/pic/VAR.png" 
+          src="/VAR.png" 
           alt="VAR Viewtan Arena"
           onClick={onAdminClick}
           style={{ cursor: 'pointer' }}

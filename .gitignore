@@ -1,9 +1,11 @@
 # Dependencies
 node_modules
+package-lock.json
 
 # Build output
 dist
 build
+.vercel
 
 # Environment variables
 .env
@@ -23,3 +25,6 @@ Thumbs.db
 # Logs
 *.log
 npm-debug.log*
+
+# Local development
+.cache
