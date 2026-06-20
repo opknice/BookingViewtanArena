@@ -13,6 +13,11 @@ export default function FindTeamPage() {
       <main className="main-layout">
         <div className="feature-page">
           <div className="feature-card">
+            
+            <div className="academy-hero">
+              <img src="/FindTeam.png" alt="หาก๊วน/หาเพื่อนเล่น" className="academy-hero-image" />
+            </div>
+
             <div className="feature-header">
               <span className="feature-icon-large">👥</span>
               <h1>หาก๊วน/หาเพื่อนเล่น</h1>
@@ -20,7 +25,7 @@ export default function FindTeamPage() {
                 เชื่อมต่อนักฟุตบอลและทีมที่กำลังหาสมาชิกในพื้นที่
               </p>
             </div>
-
+{/*  
             <div className="tab-buttons">
               <button 
                 className={`tab-btn ${activeTab === 'find-team' ? 'active' : ''}`}
@@ -128,10 +133,47 @@ export default function FindTeamPage() {
               </div>
             )}
 
+            */}
+
             <div className="post-your-own">
-              <h3>ประกาศของคุณ</h3>
-              <p>ต้องการหาทีมหรือหาผู้เล่นเพิ่ม? โพสต์ประกาศฟรี!</p>
-              <button className="btn btn-primary">โพสต์ประกาศ</button>
+              <h3>🎯 เข้าร่วมกลุ่ม LINE</h3>
+              <p>เข้ากลุ่ม LINE เพื่อหาทีม หาเพื่อนเล่น และแลกเปลี่ยนข้อมูล!</p>
+              
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px', marginTop: '24px' }}>
+                <img 
+                  src="/QRLineadd.png" 
+                  alt="QR Code เข้ากลุ่ม LINE" 
+                  style={{ 
+                    maxWidth: '200px', 
+                    width: '100%', 
+                    height: 'auto',
+                    borderRadius: '8px',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+                  }} 
+                />
+                
+                <a 
+                  href="https://line.me/ti/g2/SoGju-w6Cm2H9VZ0OFyHnXJdZ9htXmCjqc6spA?utm_source=invitation&utm_medium=link_copy&utm_campaign=default"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-primary"
+                  style={{ 
+                    display: 'inline-flex', 
+                    alignItems: 'center', 
+                    gap: '8px',
+                    backgroundColor: '#06C755',
+                    fontSize: '16px',
+                    padding: '12px 24px'
+                  }}
+                >
+                  <span style={{ fontSize: '20px' }}>💬</span>
+                  เข้ากลุ่ม LINE
+                </a>
+                
+                <p style={{ fontSize: '14px', color: '#666', textAlign: 'center', margin: '0' }}>
+                  📱 สแกน QR Code หรือคลิกปุ่มด้านบนเพื่อเข้ากลุ่ม
+                </p>
+              </div>
             </div>
           </div>
         </div>

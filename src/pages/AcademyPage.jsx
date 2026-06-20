@@ -93,12 +93,7 @@ export default function AcademyPage() {
       `👤 ผู้ปกครอง: ${data.parentName}\n` +
       `📞 โทร: ${data.phone}\n` +
       `🕐 เวลาสมัคร: ${timestamp}\n` +
-      `━━━━━━━━━━━━━━━\n` +
-      `💰 ค่าเรียน: 1,200 บาท\n` +
-      `📍 สนาม: VAR วิวตาลอารีน่า\n` +
-      `🔄 สถานะ: รอติดต่อกลับ\n` +
-      `━━━━━━━━━━━━━━━\n` +
-      `📝 *กรุณาติดต่อกลับภายใน 1-2 วันทำการ*`
+      `━━━━━━━━━━━━━━━\n`
 
     try {
       const response = await fetch(WORKER_URL, {
