@@ -5,6 +5,9 @@ export default function HeroSection({ onAdminClick }) {
   const isHomePage = location.pathname === '/'
   const isBookingPage = location.pathname === '/booking'
   const isCheckStatusPage = location.pathname === '/check-status'
+  const isTournamentPage = location.pathname === '/tournament'
+  const isFindTeamPage = location.pathname === '/find-team'
+  const isAcademyPage = location.pathname === '/academy'
 
   return (
     <section className="home-hero">
@@ -33,6 +36,24 @@ export default function HeroSection({ onAdminClick }) {
               className={isCheckStatusPage ? 'active' : ''}
             >
               เช็คสถานะ
+            </Link>
+            <Link 
+              to="/tournament"
+              className={isTournamentPage ? 'active' : ''}
+            >
+              หารายการแข่งขัน
+            </Link>
+            <Link 
+              to="/find-team"
+              className={isFindTeamPage ? 'active' : ''}
+            >
+              หาก๊วน/หาเพื่อนเล่น
+            </Link>
+            <Link 
+              to="/academy"
+              className={isAcademyPage ? 'active' : ''}
+            >
+              สมัคร Academy
             </Link>
           </div>
         </div>
