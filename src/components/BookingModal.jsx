@@ -46,11 +46,9 @@ export default function BookingModal({
       setFormData({ name: '', phone: '' })
       setErrors({})
     } catch (error) {
-      if (error.payload?.errors) {
-        setErrors(error.payload.errors)
-      } else {
-        setErrors({ general: error.message })
-      }
+      // Handle error message properly
+      const errorMessage = error?.message || 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง'
+      setErrors({ general: errorMessage })
     } finally {
       setSubmitting(false)
     }

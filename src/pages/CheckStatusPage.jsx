@@ -20,10 +20,20 @@ export default function CheckStatusPage() {
   useEffect(() => {
     const initialPhone = searchParams.get('phone')
     if (initialPhone) {
-      setPhone(normalizePhone(initialPhone))
-      handleSearch(normalizePhone(initialPhone))
+      const normalized = normalizePhone(initialPhone)
+      setPhone(normalized)
+      
+      if (/^0\d{9}$/.test(normalized)) {
+        setLoading(true)
+        const unsubscribe = subscribeToBookingsByPhone(normalized, (bookings) => {
+          const groups = groupBookings(bookings)
+          setResults(groups)
+          setLoading(false)
+        })
+        return unsubscribe
+      }
     }
-  }, [])
+  }, [searchParams, subscribeToBookingsByPhone])
 
   const handleSearch = (searchPhone = null) => {
     const phoneToSearch = normalizePhone(searchPhone || phone)

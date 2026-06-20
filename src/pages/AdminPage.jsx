@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useBooking } from '../contexts/BookingContext'
 import { money, timeToMinutes, mergeSlotRanges, thaiDate, parseLocalDate } from '../utils/helpers'
 import { PRICE_DAY, PRICE_NIGHT, SLOT_MINUTES } from '../constants/booking'
@@ -303,7 +303,6 @@ function AdminBookingCard({ group, onAction }) {
       <div className="admin-slot-tags">
         {mergeSlotRanges(group).map((order, index) => (
           <div key={index} className={`admin-slot-tag ${order.isNight ? 'night' : 'day'}`}>
-            <span>{order.isNight ? 'กลางคืน' : 'กลางวัน'}</span>
             <strong>{order.startTime} - {order.endTime}</strong>
             <span>{money(order.price)} บาท</span>
           </div>

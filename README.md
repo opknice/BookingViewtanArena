@@ -186,12 +186,6 @@ export const PRICE_NIGHT = 1000
 - รองรับ Responsive Design
 - ใช้ CSS Variables สำหรับ Theming
 
-## 🔐 Admin Access
-
-- คลิกที่โลโก้ VAR บนหน้าจองเพื่อเข้าสู่หน้า Admin
-- รหัสผ่าน: `55555`
-- หรือเข้าผ่าน URL: `/admin`
-
 ## 📞 Telegram Notification
 
 การแจ้งเตือนจะส่งอัตโนมัติเมื่อมีการจองใหม่ผ่าน Cloudflare Worker:
