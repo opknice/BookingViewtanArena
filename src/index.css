@@ -995,6 +995,10 @@ a {
   background: #f8fafc;
 }
 
+.admin-shell .app-shell {
+  padding-bottom: 0;
+}
+
 .admin-header {
   background: linear-gradient(135deg, var(--green), #1a7a42);
   color: #fff;
