@@ -4310,3 +4310,559 @@ rnament-prizes h4,
     font-size: 14px;
   }
 }
+
+/* Tournament Contact Info Box */
+.info-box {
+  max-width: 960px;
+  margin: 24px auto 0;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  padding: 28px;
+  border: 2px solid var(--green-soft);
+}
+
+.info-box h3 {
+  margin: 0 0 12px;
+  color: var(--green);
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.info-box > p {
+  margin: 0 0 20px;
+  color: var(--text);
+  font-size: 14px;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.contact-info-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tournament-contact {
+  width: 100%;
+}
+
+.social-links-tournament {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.social-link-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px 20px;
+  border-radius: 12px;
+  background: #f9fafb;
+  border: 2px solid var(--line);
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.social-link-box:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgb(0 0 0 / 0.1);
+}
+
+.social-link-box.facebook {
+  background: #1877f2;
+  border-color: #1877f2;
+  color: #fff;
+}
+
+.social-link-box.facebook:hover {
+  background: #166fe5;
+  border-color: #166fe5;
+}
+
+.social-link-box.phone {
+  background: #10b981;
+  border-color: #10b981;
+  color: #fff;
+}
+
+.social-link-box.phone:hover {
+  background: #059669;
+  border-color: #059669;
+}
+
+.social-link-box.instagram {
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  border-color: #e4405f;
+  color: #fff;
+}
+
+.social-link-box.instagram:hover {
+  opacity: 0.9;
+}
+
+.social-link-box.tiktok {
+  background: #000;
+  border-color: #000;
+  color: #fff;
+}
+
+.social-link-box.tiktok:hover {
+  background: #1a1a1a;
+  border-color: #1a1a1a;
+}
+
+.social-link-box.line {
+  background: #06c755;
+  border-color: #06c755;
+  color: #fff;
+}
+
+.social-link-box.line:hover {
+  background: #05b34b;
+  border-color: #05b34b;
+}
+
+.social-link-box svg {
+  flex-shrink: 0;
+}
+
+.social-link-box span {
+  white-space: nowrap;
+}
+
+@media (max-width: 760px) {
+  .info-box {
+    margin: 20px 16px 0;
+    padding: 20px;
+  }
+
+  .social-links-tournament {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 430px) {
+  .info-box {
+    margin: 16px 10px 0;
+    padding: 16px;
+  }
+
+  .info-box h3 {
+    font-size: 18px;
+  }
+
+  .info-box > p {
+    font-size: 13px;
+  }
+
+  .social-link-box {
+    padding: 12px 14px;
+    font-size: 13px;
+  }
+}
+
+
+/* Contact Page Styles */
+.contact-section {
+  margin-top: 32px;
+}
+
+.contact-map {
+  margin-top: 40px;
+}
+
+.contact-map h2 {
+  margin: 0 0 20px;
+  color: var(--green);
+  font-size: 22px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.map-container {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.contact-social {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.contact-social h2 {
+  margin: 0 0 24px;
+  color: var(--green);
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.social-links-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.social-link-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: 16px;
+  padding: 16px 20px;
+  font-size: 15px;
+  font-weight: 600;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  border: none;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
+}
+
+.social-link-box svg {
+  flex-shrink: 0;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  fill: #fff !important;
+  width: 18px;
+  height: 18px;
+}
+
+.social-link-box span {
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  letter-spacing: 0.02em;
+  color: #fff !important;
+  white-space: nowrap;
+}
+
+.social-link-box:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 12px 28px rgb(0 0 0 / 0.25);
+}
+
+.social-link-box:active {
+  transform: translateY(-2px) scale(1.01);
+}
+
+.social-link-box:hover svg {
+  transform: scale(1.2) rotate(8deg);
+}
+
+/* Phone */
+.social-link-box.phone {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+}
+
+.social-link-box.phone:hover {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+}
+
+/* Facebook */
+.social-link-box.facebook {
+  background: linear-gradient(135deg, #1877f2 0%, #0c5fcd 100%) !important;
+}
+
+.social-link-box.facebook:hover {
+  background: linear-gradient(135deg, #0c5fcd 0%, #0a4fa8 100%) !important;
+}
+
+/* Instagram */
+.social-link-box.instagram {
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%) !important;
+}
+
+.social-link-box.instagram:hover {
+  background: linear-gradient(45deg, #e6683c 0%, #dc2743 25%, #cc2366 50%, #bc1888 75%, #a8136d 100%) !important;
+}
+
+/* TikTok */
+.social-link-box.tiktok {
+  background: linear-gradient(135deg, #000 0%, #1a1a1a 100%) !important;
+}
+
+.social-link-box.tiktok:hover {
+  background: linear-gradient(135deg, #1a1a1a 0%, #333 100%) !important;
+}
+
+/* LINE */
+.social-link-box.line {
+  background: linear-gradient(135deg, #00b900 0%, #00a000 100%) !important;
+}
+
+.social-link-box.line:hover {
+  background: linear-gradient(135deg, #00a000 0%, #008800 100%) !important;
+}
+
+.page-subtitle {
+  margin: -8px 0 24px;
+  color: var(--muted);
+  font-size: 14px;
+  text-align: center;
+}
+
+/* Feature Page Styles */
+.feature-page {
+  max-width: 100%;
+}
+
+.feature-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  padding: 32px;
+}
+
+.feature-card h1 {
+  margin: 0 0 8px;
+  color: var(--green);
+  font-size: 28px;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* Academy Page Styles */
+.academy-hero {
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.academy-hero-image {
+  width: 100%;
+  max-width: 600px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.1);
+}
+
+.academy-schedule {
+  margin-bottom: 32px;
+}
+
+.academy-schedule h2 {
+  margin: 0 0 20px;
+  color: var(--green);
+  font-size: 22px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.schedule-card {
+  border: 2px solid var(--green-soft);
+  border-radius: 14px;
+  background: #f9fafb;
+  padding: 24px;
+}
+
+.schedule-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.schedule-item:last-child {
+  border-bottom: none;
+}
+
+.schedule-icon {
+  font-size: 32px;
+  flex-shrink: 0;
+}
+
+.schedule-content h4 {
+  margin: 0 0 4px;
+  color: var(--text);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.schedule-content p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.schedule-item.special {
+  background: linear-gradient(135deg, var(--green-soft), var(--mint));
+  border-radius: 10px;
+  padding: 20px 16px;
+  margin-top: 12px;
+}
+
+.price-highlight {
+  color: var(--green);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.academy-cta {
+  margin: 40px 0;
+  text-align: center;
+}
+
+.academy-cta h2 {
+  margin: 0 0 20px;
+  color: var(--green);
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.btn-large {
+  min-height: 54px;
+  font-size: 16px;
+  padding: 14px 32px;
+}
+
+.academy-contact-info {
+  margin-top: 40px;
+  border-top: 2px solid var(--green-soft);
+  padding-top: 32px;
+}
+
+.academy-contact-info h3 {
+  margin: 0 0 20px;
+  color: var(--green);
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.contact-methods {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.contact-method {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #f9fafb;
+  padding: 16px;
+}
+
+.contact-method .contact-icon {
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+.contact-method p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.contact-method strong {
+  display: block;
+  color: var(--text);
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.academy-modal {
+  max-height: 85vh;
+}
+
+.modal-subtitle {
+  margin: -4px 0 20px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.academy-form {
+  margin-top: 24px;
+}
+
+.academy-form select {
+  width: 100%;
+  min-width: 0;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  outline: none;
+  padding: 10px 12px;
+  color: var(--text);
+  background: #fff;
+  font-size: 14px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.academy-form select:focus {
+  border-color: var(--green);
+}
+
+.academy-form select.invalid {
+  border-color: #dc2626;
+}
+
+.form-note {
+  margin: 16px 0;
+  border-radius: 10px;
+  background: #fffbeb;
+  padding: 12px 14px;
+  border: 1px dashed #fbbf24;
+}
+
+.form-note p {
+  margin: 0;
+  color: #92400e;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.success-message {
+  text-align: center;
+  padding: 20px;
+}
+
+.success-icon {
+  width: 64px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  background: var(--green-soft);
+  color: #166534;
+  font-size: 40px;
+}
+
+.success-message h2 {
+  margin: 0 0 12px;
+  color: var(--green);
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.success-message p {
+  margin: 4px 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+@media (max-width: 760px) {
+  .contact-grid,
+  .contact-methods,
+  .social-links-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .feature-card {
+    padding: 24px 20px;
+  }
+
+  .academy-hero-image {
+    max-width: 100%;
+  }
+}

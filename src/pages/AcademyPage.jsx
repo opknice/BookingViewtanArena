@@ -153,22 +153,26 @@ export default function AcademyPage() {
                     <p className="price-highlight">1,200 บาท</p>
                     <small>รับชุด ฟรี 1 ชุด !!</small>
                   </div>
+                  
                 </div>
+                
               </div>
+                
+
             </div>
 
+                            <button 
+                      className="btn btn-primary btn-large"
+                      onClick={() => setShowForm(true)}
+                    >
+                      สมัครเรียนตอนนี้
+                    </button>
 
-
-            <div className="academy-cta">
-              <h2>🎉 เปิดรับสมัครแล้ววันนี้!</h2>
+            
+             
               
-              <button 
-                className="btn btn-primary btn-large"
-                onClick={() => setShowForm(true)}
-              >
-                สมัครเรียนตอนนี้
-              </button>
-            </div>
+
+           
 
             <div className="academy-contact-info">
               <h3>📞 ติดต่อสอบถามเพิ่มเติม</h3>

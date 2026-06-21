@@ -7,6 +7,7 @@ export default function HeroSection({ onAdminClick }) {
   const isTournamentPage = location.pathname === '/tournament'
   const isFindTeamPage = location.pathname === '/find-team'
   const isAcademyPage = location.pathname === '/academy'
+  const isContactPage = location.pathname === '/contact'
 
   return (
     <section className="home-hero">
@@ -47,6 +48,12 @@ export default function HeroSection({ onAdminClick }) {
               className={isAcademyPage ? 'active' : ''}
             >
               สมัคร Academy
+            </Link>
+            <Link 
+              to="/contact"
+              className={isContactPage ? 'active' : ''}
+            >
+              ติดต่อเรา
             </Link>
           </div>
         </div>
