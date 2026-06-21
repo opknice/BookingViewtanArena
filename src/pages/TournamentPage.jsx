@@ -210,7 +210,7 @@ export default function TournamentPage() {
                     <span>กาลาติกอส98</span>
                   </a>
 
-                  7\
+                  
                   </div>
                 </div>
               </div>
