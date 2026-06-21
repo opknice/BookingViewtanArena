@@ -136,7 +136,7 @@ export default function AcademyPage() {
                   <span className="schedule-icon">🕐</span>
                   <div className="schedule-content">
                     <h4>เวลาเรียน</h4>
-                    <p>เสาร์-อาทิตย์ เวลา 16.00-18.00 น.</p>
+                    <p>เสาร์-อาทิตย์ เวลา 17.00-19.00 น.</p>
                   </div>
                 </div>
                 <div className="schedule-item">

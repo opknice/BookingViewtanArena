@@ -59,11 +59,33 @@ export default function HomePage() {
         {/* Welcome Section */}
         <section className="welcome-section" style={{ padding: '0rem 1.5rem', maxWidth: '1200px', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-            <h1 style={{ fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '1rem', color: '#1a1a1a' }}>
+            <h1 style={{ 
+              fontSize: 'clamp(1rem, 5vw, 2.5rem)', 
+              fontWeight: 'bold', 
+              marginBottom: '1rem', 
+              color: '#1a1a1a',
+              lineHeight: '1.3'
+            }}>
               ยินดีต้อนรับสู่ VIEWTAN ARENA
             </h1>
-            <p style={{ fontSize: '1.25rem', color: '#666', maxWidth: '800px', margin: '0 auto' }}>
-              สนามฟุตบอลหญ้าเทียมในจังหวัดเพชรบุรี พร้อมบริการครบวงจร
+            
+            <p style={{ 
+              fontSize: 'clamp(0.8rem, 3vw, 1.1rem)', 
+              color: '#444', 
+              maxWidth: '900px', 
+              margin: '0 auto',
+              lineHeight: '1.8',
+              padding: '0 1rem',
+              textAlign: 'left'
+            }}>
+              สนามฟุตบอลหญ้าเทียมมาตรฐานแห่งใหม่ในจังหวัดเพชรบุรี พร้อมมอบประสบการณ์การเล่นฟุตบอลที่ดีที่สุดให้กับทุกคน ไม่ว่าจะเป็นการเตะกับเพื่อน การแข่งขันฟุตบอล หรือการจัดกิจกรรมกีฬา
+              <br/>
+              🏆 สนามมาตรฐาน พื้นหญ้าเทียมคุณภาพสูง<br/>
+              ⚽ เดินทางสะดวก มีที่จอดรถและสิ่งอำนวยความสะดวกครบครัน<br/>
+              ☕ มีพื้นที่ส่วนกลางรองรับนักเตะและผู้ติดตาม<br/>
+              🤝 เปิดให้บริการทั้งการจองสนาม การแข่งขัน และกิจกรรมฟุตบอลทุกระดับ<br/>
+              <br/>
+              VIEWTAN ARENA มากกว่าสนามฟุตบอล…คือพื้นที่แห่งมิตรภาพ ความสนุก และความทรงจำของคนรักฟุตบอลในเพชรบุรี
             </p>
           </div>
 
