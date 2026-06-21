@@ -33,12 +33,6 @@ export default function HeroSection({ onAdminClick }) {
               จองสนาม
             </Link>
             <Link 
-              to="/check-status"
-              className={isCheckStatusPage ? 'active' : ''}
-            >
-              เช็คสถานะ
-            </Link>
-            <Link 
               to="/tournament"
               className={isTournamentPage ? 'active' : ''}
             >
@@ -55,6 +49,12 @@ export default function HeroSection({ onAdminClick }) {
               className={isAcademyPage ? 'active' : ''}
             >
               สมัคร Academy
+            </Link>
+            <Link 
+              to="/check-status"
+              className={isCheckStatusPage ? 'active' : ''}
+            >
+              เช็คสถานะ
             </Link>
             <Link 
               to="/contact"
