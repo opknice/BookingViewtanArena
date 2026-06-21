@@ -57,11 +57,11 @@ export default function HomePage() {
 
       <main className="main-layout">
         {/* Welcome Section */}
-        <section className="welcome-section" style={{ padding: '3rem 1.5rem', maxWidth: '1200px', margin: '0 auto' }}>
+        <section className="welcome-section" style={{ padding: '0rem 1.5rem', maxWidth: '1200px', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-            <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '1rem', color: '#1a1a1a' }}>
-              ยินดีต้อนรับสู่ VAR วิวตาล อารีน่า
-            </h2>
+            <h1 style={{ fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '1rem', color: '#1a1a1a' }}>
+              ยินดีต้อนรับสู่ VIEWTAN ARENA
+            </h1>
             <p style={{ fontSize: '1.25rem', color: '#666', maxWidth: '800px', margin: '0 auto' }}>
               สนามฟุตบอลหญ้าเทียมในจังหวัดเพชรบุรี พร้อมบริการครบวงจร
             </p>

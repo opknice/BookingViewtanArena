@@ -196,6 +196,8 @@ a {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  max-width: 600px;
+  justify-content: center;
 }
 
 .home-hero-links a {
@@ -207,6 +209,7 @@ a {
   font-weight: 700;
   backdrop-filter: blur(8px);
   transition: all 0.3s ease;
+  flex: 0 0 auto;
 }
 
 .home-hero-links a:hover {
@@ -1597,9 +1600,20 @@ a {
     padding-right: 92px;
   }
 
+  .home-hero-links {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+    max-width: 100%;
+  }
+
   .home-hero-links a {
-    padding: 6px 11px;
-    font-size: 12px;
+    padding: 8px 4px;
+    font-size: 10px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .home-hero-logo {
