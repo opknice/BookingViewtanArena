@@ -88,13 +88,15 @@ export function BookingProvider({ children }) {
       const createdAt = Date.now()
       const updates = {}
 
-      const bookingList = slots.map((slot) => {
-        const id = `${groupId}_${slot.startTime.replace(':', '')}`
+      const bookingList = slots.map((slot, index) => {
+        // ใช้ date จาก slot ถ้ามี (สำหรับจองรายสัปดาห์) หรือใช้ date หลักถ้าไม่มี
+        const bookingDate = slot.date || date
+        const id = `${groupId}_${bookingDate.replace(/-/g, '')}_${slot.startTime.replace(':', '')}_${index}`
         const booking = {
           groupId,
           name: name.trim(),
           phone,
-          date,
+          date: bookingDate,
           startTime: slot.startTime,
           endTime: slot.endTime,
           price: slot.price,
