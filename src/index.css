@@ -2751,12 +2751,16 @@ a {
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 4px 20px rgb(15 76 42 / 0.12);
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .academy-hero-image {
   width: 100%;
   height: auto;
   display: block;
+  object-fit: cover;
 }
 
 .academy-highlight {
@@ -3173,8 +3177,8 @@ rnament-prizes h4,
 /* Tournament Grid for Small Cards */
 .tournament-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
   margin-bottom: 32px;
 }
 
@@ -3188,7 +3192,7 @@ rnament-prizes h4,
 }
 
 .tournament-card-small:hover {
-  transform: translateY(-8px);
+  transform: translateY(-6px);
   box-shadow: 0 12px 32px rgb(15 76 42 / 0.18);
   border-color: var(--green);
 }
@@ -3197,19 +3201,21 @@ rnament-prizes h4,
   position: relative;
   width: 100%;
   overflow: hidden;
-  aspect-ratio: 16/9;
+  background: #f3f4f6;
 }
 
 .tournament-card-image img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
   display: block;
   transition: transform 0.3s ease;
+  object-fit: cover;
+  min-height: 200px;
+  max-height: 300px;
 }
 
 .tournament-card-small:hover .tournament-card-image img {
-  transform: scale(1.08);
+  transform: scale(1.05);
 }
 
 .tournament-badge {
@@ -3591,80 +3597,7 @@ rnament-prizes h4,
   }
 }
 
-/* Tournament Page Grid Layout */
-.tournament-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 24px;
-  margin-bottom: 32px;
-}
-
-.tournament-card-small {
-  border: 2px solid var(--line);
-  border-radius: 14px;
-  background: #fff;
-  overflow: hidden;
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.tournament-card-small:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 30px rgb(15 76 42 / 0.15);
-  border-color: var(--green);
-}
-
-.tournament-card-image {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-}
-
-.tournament-card-image img {
-  width: 100%;
-  height: 220px;
-  object-fit: cover;
-  display: block;
-}
-
-.tournament-badge {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  border-radius: 999px;
-  padding: 6px 16px;
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-  backdrop-filter: blur(8px);
-  box-shadow: 0 2px 8px rgb(0 0 0 / 0.2);
-}
-
-.tournament-badge.open {
-  background: linear-gradient(135deg, #86efac, #22c55e);
-  color: #14532d;
-}
-
-.tournament-badge.ongoing {
-  background: linear-gradient(135deg, #fbbf24, #f59e0b);
-  color: #78350f;
-}
-
-.tournament-badge.closed {
-  background: linear-gradient(135deg, #fca5a5, #ef4444);
-  color: #7f1d1d;
-}
-
-.tournament-badge.completed {
-  background: linear-gradient(135deg, #cbd5e1, #94a3b8);
-  color: #1e293b;
-}
-
-.tournament-badge.coming-soon {
-  background: linear-gradient(135deg, #a5b4fc, #818cf8);
-  color: #312e81;
-}
-
+/* Tournament Card Info */
 .tournament-card-info {
   padding: 20px;
 }
@@ -3833,20 +3766,6 @@ rnament-prizes h4,
 
 .contact-info-section {
   margin-top: 20px;
-}
-
-/* Academy Page Specific Styles */
-.academy-hero {
-  margin-bottom: 28px;
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0 4px 16px rgb(0 0 0 / 0.1);
-}
-
-.academy-hero-image {
-  width: 100%;
-  height: auto;
-  display: block;
 }
 
 .academy-schedule {
@@ -4214,6 +4133,11 @@ rnament-prizes h4,
     padding: 20px;
   }
 
+  .academy-hero {
+    margin-bottom: 24px;
+    border-radius: 12px;
+  }
+
   .services-section,
   .location-card,
   .contact-card {
@@ -4228,85 +4152,98 @@ rnament-prizes h4,
   margin-top: 16px;
 }
 
+/* Social Link Boxes - Universal Styles */
 .social-link-box {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 12px;
-  padding: 14px 16px;
-  border-radius: 10px;
-  background: #fff;
+  padding: 16px 20px;
+  border-radius: 12px;
   border: 2px solid transparent;
   color: #fff;
   font-size: 15px;
-  font-weight: 600;
-  transition: all 0.3s ease;
+  font-weight: 700;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
 }
 
 .social-link-box:hover {
-  transform: translateX(4px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 .social-link-box svg {
   flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.social-link-box:hover svg {
+  transform: scale(1.15);
 }
 
 .social-link-box span {
-  flex: 1;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
+/* Phone */
+.social-link-box.phone {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border-color: #10b981;
+}
+
+.social-link-box.phone:hover {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+}
+
+/* Facebook */
 .social-link-box.facebook {
-  background: #1877f2;
+  background: linear-gradient(135deg, #1877f2 0%, #0c5fcd 100%);
   border-color: #1877f2;
 }
 
 .social-link-box.facebook:hover {
-  background: #0c63d4;
-  border-color: #0c63d4;
+  background: linear-gradient(135deg, #0c5fcd 0%, #0a4fa8 100%);
 }
 
+/* Instagram */
 .social-link-box.instagram {
   background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
   border-color: #bc1888;
 }
 
 .social-link-box.instagram:hover {
-  opacity: 0.9;
-  box-shadow: 0 4px 16px rgba(188, 24, 136, 0.4);
+  background: linear-gradient(45deg, #e6683c 0%, #dc2743 25%, #cc2366 50%, #bc1888 75%, #a8136d 100%);
 }
 
+/* TikTok */
 .social-link-box.tiktok {
-  background: #000;
+  background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
   border-color: #000;
 }
 
 .social-link-box.tiktok:hover {
-  background: #333;
-  border-color: #333;
+  background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
 }
 
+/* LINE */
 .social-link-box.line {
-  background: #06C755;
+  background: linear-gradient(135deg, #06C755 0%, #05a847 100%);
   border-color: #06C755;
 }
 
 .social-link-box.line:hover {
-  background: #05a847;
-  border-color: #05a847;
+  background: linear-gradient(135deg, #05a847 0%, #048a3a 100%);
 }
 
-/* Responsive for Social Links Tournament */
+/* Responsive for Social Links */
 @media (max-width: 430px) {
   .social-link-box {
-    padding: 12px 14px;
-    font-size: 14px;
-  }
-  
-  .social-link-box span {
+    padding: 12px 16px;
     font-size: 14px;
   }
 }
@@ -4353,89 +4290,6 @@ rnament-prizes h4,
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 12px;
   margin-top: 12px;
-}
-
-.social-link-box {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  padding: 16px 20px;
-  border-radius: 12px;
-  background: #f9fafb;
-  border: 2px solid var(--line);
-  color: var(--text);
-  font-size: 15px;
-  font-weight: 700;
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.social-link-box:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgb(0 0 0 / 0.1);
-}
-
-.social-link-box.facebook {
-  background: #1877f2;
-  border-color: #1877f2;
-  color: #fff;
-}
-
-.social-link-box.facebook:hover {
-  background: #166fe5;
-  border-color: #166fe5;
-}
-
-.social-link-box.phone {
-  background: #10b981;
-  border-color: #10b981;
-  color: #fff;
-}
-
-.social-link-box.phone:hover {
-  background: #059669;
-  border-color: #059669;
-}
-
-.social-link-box.instagram {
-  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-  border-color: #e4405f;
-  color: #fff;
-}
-
-.social-link-box.instagram:hover {
-  opacity: 0.9;
-}
-
-.social-link-box.tiktok {
-  background: #000;
-  border-color: #000;
-  color: #fff;
-}
-
-.social-link-box.tiktok:hover {
-  background: #1a1a1a;
-  border-color: #1a1a1a;
-}
-
-.social-link-box.line {
-  background: #06c755;
-  border-color: #06c755;
-  color: #fff;
-}
-
-.social-link-box.line:hover {
-  background: #05b34b;
-  border-color: #05b34b;
-}
-
-.social-link-box svg {
-  flex-shrink: 0;
-}
-
-.social-link-box span {
-  white-space: nowrap;
 }
 
 @media (max-width: 760px) {
@@ -4513,95 +4367,6 @@ rnament-prizes h4,
   margin: 0 auto;
 }
 
-.social-link-box {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  border-radius: 16px;
-  padding: 16px 20px;
-  font-size: 15px;
-  font-weight: 600;
-  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  border: none;
-  text-align: center;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
-}
-
-.social-link-box svg {
-  flex-shrink: 0;
-  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  fill: #fff !important;
-  width: 18px;
-  height: 18px;
-}
-
-.social-link-box span {
-  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  letter-spacing: 0.02em;
-  color: #fff !important;
-  white-space: nowrap;
-}
-
-.social-link-box:hover {
-  transform: translateY(-4px) scale(1.03);
-  box-shadow: 0 12px 28px rgb(0 0 0 / 0.25);
-}
-
-.social-link-box:active {
-  transform: translateY(-2px) scale(1.01);
-}
-
-.social-link-box:hover svg {
-  transform: scale(1.2) rotate(8deg);
-}
-
-/* Phone */
-.social-link-box.phone {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
-}
-
-.social-link-box.phone:hover {
-  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
-}
-
-/* Facebook */
-.social-link-box.facebook {
-  background: linear-gradient(135deg, #1877f2 0%, #0c5fcd 100%) !important;
-}
-
-.social-link-box.facebook:hover {
-  background: linear-gradient(135deg, #0c5fcd 0%, #0a4fa8 100%) !important;
-}
-
-/* Instagram */
-.social-link-box.instagram {
-  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%) !important;
-}
-
-.social-link-box.instagram:hover {
-  background: linear-gradient(45deg, #e6683c 0%, #dc2743 25%, #cc2366 50%, #bc1888 75%, #a8136d 100%) !important;
-}
-
-/* TikTok */
-.social-link-box.tiktok {
-  background: linear-gradient(135deg, #000 0%, #1a1a1a 100%) !important;
-}
-
-.social-link-box.tiktok:hover {
-  background: linear-gradient(135deg, #1a1a1a 0%, #333 100%) !important;
-}
-
-/* LINE */
-.social-link-box.line {
-  background: linear-gradient(135deg, #00b900 0%, #00a000 100%) !important;
-}
-
-.social-link-box.line:hover {
-  background: linear-gradient(135deg, #00a000 0%, #008800 100%) !important;
-}
-
 .page-subtitle {
   margin: -8px 0 24px;
   color: var(--muted);
@@ -4609,39 +4374,7 @@ rnament-prizes h4,
   text-align: center;
 }
 
-/* Feature Page Styles */
-.feature-page {
-  max-width: 100%;
-}
-
-.feature-card {
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: var(--shadow);
-  padding: 32px;
-}
-
-.feature-card h1 {
-  margin: 0 0 8px;
-  color: var(--green);
-  font-size: 28px;
-  font-weight: 700;
-  text-align: center;
-}
-
-/* Academy Page Styles */
-.academy-hero {
-  margin-bottom: 32px;
-  text-align: center;
-}
-
-.academy-hero-image {
-  width: 100%;
-  max-width: 600px;
-  border-radius: 16px;
-  box-shadow: 0 8px 24px rgb(0 0 0 / 0.1);
-}
-
+/* Academy Schedule Card - ใช้ร่วมกันระหว่าง Academy และ Feature pages */
 .academy-schedule {
   margin-bottom: 32px;
 }

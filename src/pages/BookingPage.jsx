@@ -97,21 +97,37 @@ export default function BookingPage() {
   }
 
   const handleSubmitBooking = async (formData) => {
-    const ALL_SLOTS = generateSlots()
-    const pickedList = ALL_SLOTS.filter(slot => pickedSlots.has(slot.startTime))
+    try {
+      const ALL_SLOTS = generateSlots()
+      const pickedList = ALL_SLOTS.filter(slot => pickedSlots.has(slot.startTime))
 
-    const result = await createBooking({
-      name: formData.name,
-      phone: formData.phone,
-      date: dateKey(selectedDate),
-      slots: pickedList
-    })
+      // Validate picked slots
+      if (pickedList.length === 0) {
+        throw new Error('กรุณาเลือกช่วงเวลาอย่างน้อย 1 ช่วง')
+      }
 
-    setUserPhone(formData.phone)
-    setConfirmData(result)
-    setShowBookingModal(false)
-    setShowConfirmModal(true)
-    setPickedSlots(new Set())
+      // Check if any selected slot is already booked (recheck before submission)
+      const hasConflict = pickedList.some(slot => bookedMap[slot.startTime])
+      if (hasConflict) {
+        throw new Error('ช่วงเวลาที่เลือกถูกจองไปแล้ว กรุณาเลือกช่วงเวลาใหม่')
+      }
+
+      const result = await createBooking({
+        name: formData.name,
+        phone: formData.phone,
+        date: dateKey(selectedDate),
+        slots: pickedList
+      })
+
+      setUserPhone(formData.phone)
+      setConfirmData(result)
+      setShowBookingModal(false)
+      setShowConfirmModal(true)
+      setPickedSlots(new Set())
+    } catch (error) {
+      // Re-throw error to be handled by BookingModal
+      throw error
+    }
   }
 
   return (

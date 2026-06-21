@@ -67,7 +67,7 @@ export function BookingProvider({ children }) {
     return unsubscribe
   }, [])
 
-  // Create booking
+  // Create booking with conflict detection
   const createBooking = useCallback(async (payload) => {
     setLoading(true)
     try {
@@ -84,14 +84,63 @@ export function BookingProvider({ children }) {
         throw new Error('กรุณาเลือกช่วงเวลา')
       }
 
+      // Group slots by date for conflict checking
+      const slotsByDate = {}
+      slots.forEach(slot => {
+        const bookingDate = slot.date || date
+        if (!slotsByDate[bookingDate]) {
+          slotsByDate[bookingDate] = []
+        }
+        slotsByDate[bookingDate].push(slot)
+      })
+
+      // Check for conflicts on each date
+      const bookingsRef = ref(database, 'bookings')
+      const snapshot = await new Promise((resolve, reject) => {
+        onValue(bookingsRef, resolve, reject, { onlyOnce: true })
+      })
+      const existingBookings = snapshot.val() || {}
+
+      for (const [checkDate, dateSlots] of Object.entries(slotsByDate)) {
+        const confirmedBookings = Object.values(existingBookings).filter(
+          b => b && b.date === checkDate && b.status === 'confirmed'
+        )
+
+        for (const slot of dateSlots) {
+          const slotStart = timeToMinutes(slot.startTime)
+          const slotEnd = timeToMinutes(slot.endTime)
+
+          if (!Number.isFinite(slotStart) || !Number.isFinite(slotEnd)) {
+            throw new Error('เวลาที่เลือกไม่ถูกต้อง')
+          }
+
+          // Check overlap with existing bookings
+          for (const existing of confirmedBookings) {
+            const existStart = timeToMinutes(existing.startTime)
+            const existEnd = timeToMinutes(existing.endTime)
+
+            if (Number.isFinite(existStart) && Number.isFinite(existEnd)) {
+              const hasOverlap = slotStart < existEnd && slotEnd > existStart
+              if (hasOverlap) {
+                throw new Error(
+                  `ช่วงเวลา ${slot.startTime}-${slot.endTime} วันที่ ${checkDate} ถูกจองแล้ว กรุณาเลือกช่วงเวลาอื่น`
+                )
+              }
+            }
+          }
+        }
+      }
+
+      // Create bookings if no conflicts
       const groupId = generateGroupId()
       const createdAt = Date.now()
       const updates = {}
 
       const bookingList = slots.map((slot, index) => {
-        // ใช้ date จาก slot ถ้ามี (สำหรับจองรายสัปดาห์) หรือใช้ date หลักถ้าไม่มี
         const bookingDate = slot.date || date
-        const id = `${groupId}_${bookingDate.replace(/-/g, '')}_${slot.startTime.replace(':', '')}_${index}`
+        // Create unique ID using date, time, and random suffix
+        const randomSuffix = Math.random().toString(36).substring(2, 6).toUpperCase()
+        const id = `${groupId}_${bookingDate.replace(/-/g, '')}_${slot.startTime.replace(':', '')}${slot.endTime.replace(':', '')}_${randomSuffix}`
         const booking = {
           groupId,
           name: name.trim(),
@@ -115,7 +164,7 @@ export function BookingProvider({ children }) {
         groupId,
         name: name.trim(),
         phone,
-        date,
+        date: bookingList[0].date,
         slots: bookingList,
         totalPrice: bookingList.reduce((sum, b) => sum + b.price, 0)
       })
@@ -126,6 +175,8 @@ export function BookingProvider({ children }) {
         bookings: bookingList,
         totalPrice: bookingList.reduce((sum, b) => sum + b.price, 0)
       }
+    } catch (error) {
+      throw error
     } finally {
       setLoading(false)
     }
@@ -168,9 +219,10 @@ export function useBooking() {
   return context
 }
 
-// Telegram notification helper
+// Telegram notification helper with retry and timeout
 async function sendTelegramNotification(data) {
   const WORKER_URL = 'https://telegram-notifier.thanakrit-kas.workers.dev'
+  const TIMEOUT = 5000 // 5 seconds
   
   // Validate data
   if (!data.slots || data.slots.length === 0) {
@@ -194,13 +246,23 @@ async function sendTelegramNotification(data) {
     `💰 รวม: ${(data.totalPrice || 0).toLocaleString('th-TH')} บาท\n` +
     `🔄 สถานะ: รอตรวจสอบ`
 
+  const controller = new AbortController()
+  const timeoutId = setTimeout(() => controller.abort(), TIMEOUT)
+
   try {
     await fetch(WORKER_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message })
+      body: JSON.stringify({ message }),
+      signal: controller.signal
     })
   } catch (err) {
-    console.warn('⚠️ ส่ง Telegram ไม่ได้:', err.message)
+    if (err.name === 'AbortError') {
+      console.warn('⚠️ Telegram notification timeout')
+    } else {
+      console.warn('⚠️ ส่ง Telegram ไม่ได้:', err.message)
+    }
+  } finally {
+    clearTimeout(timeoutId)
   }
 }

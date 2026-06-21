@@ -15,6 +15,9 @@ export function money(value) {
 export function timeToMinutes(time) {
   const [hour, minute] = String(time || '').split(':').map(Number)
   if (!Number.isFinite(hour) || !Number.isFinite(minute)) return null
+  // Support 24:00 as end time (convert to 1440 minutes)
+  if (hour === 24 && minute === 0) return 1440
+  if (hour < 0 || hour >= 24 || minute < 0 || minute >= 60) return null
   return (hour * 60) + minute
 }
 

@@ -1,6 +1,9 @@
 import { money, generateSlots } from '../utils/helpers'
 
 export default function SummaryBar({ pickedSlots, onClear, onBook }) {
+  // Safety check for pickedSlots
+  if (!pickedSlots || typeof pickedSlots.has !== 'function') return null
+  
   const ALL_SLOTS = generateSlots()
   const pickedList = ALL_SLOTS.filter(slot => pickedSlots.has(slot.startTime))
   

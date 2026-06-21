@@ -37,6 +37,12 @@ export default function BookingModal({
     e.preventDefault()
     if (!validate() || submitting) return
 
+    // Additional validation: check if slots are selected
+    if (pickedSlots.size === 0) {
+      setErrors({ general: 'กรุณาเลือกช่วงเวลาอย่างน้อย 1 ช่วง' })
+      return
+    }
+
     setSubmitting(true)
     try {
       await onSubmit({
@@ -47,7 +53,9 @@ export default function BookingModal({
       setErrors({})
     } catch (error) {
       // Handle error message properly
-      const errorMessage = error?.message || 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง'
+      const errorMessage = error && typeof error === 'object' && error.message 
+        ? error.message 
+        : 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง'
       setErrors({ general: errorMessage })
     } finally {
       setSubmitting(false)

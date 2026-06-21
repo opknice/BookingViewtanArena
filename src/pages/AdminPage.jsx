@@ -161,10 +161,15 @@ export default function AdminPage() {
     try {
       const { name, phone, startDate, dayOfWeek, startTime, endTime, weeks } = weeklyData
 
-      // แปลงเวลาเป็นนาที (รองรับ 24:00)
-      const parseTime = (timeStr) => {
-        const [hour, minute] = timeStr.split(':').map(Number)
-        return (hour * 60) + minute
+      // Validate inputs
+      if (!name || !name.trim()) {
+        throw new Error('กรุณากรอกชื่อ-นามสกุล')
+      }
+      if (!/^0\d{9}$/.test(phone)) {
+        throw new Error('เบอร์โทรต้องเป็นตัวเลข 10 หลักและขึ้นต้นด้วย 0')
+      }
+      if (weeks < 1 || weeks > 52) {
+        throw new Error('จำนวนสัปดาห์ต้องอยู่ระหว่าง 1-52')
       }
 
       // คำนวณวันที่ทั้งหมดที่จะจอง
@@ -187,31 +192,39 @@ export default function AdminPage() {
         currentDate.setDate(currentDate.getDate() + 7)
       }
 
-      // ตรวจสอบ Conflict
+      // ตรวจสอบ Conflict ด้วย timeToMinutes() ที่รองรับ 24:00
       const conflicts = []
-      const startMinute = parseTime(startTime)
-      const endMinute = parseTime(endTime)
+      const startMinute = timeToMinutes(startTime)
+      const endMinute = timeToMinutes(endTime)
+
+      if (!Number.isFinite(startMinute) || !Number.isFinite(endMinute)) {
+        throw new Error('เวลาที่เลือกไม่ถูกต้อง')
+      }
+
+      if (endMinute <= startMinute) {
+        throw new Error('เวลาสิ้นสุดต้องมากกว่าเวลาเริ่มต้น')
+      }
 
       bookingDates.forEach(date => {
         const dateBookings = Object.values(bookings).filter(
-          b => b.date === date && b.status !== 'cancelled'
+          b => b && b.date === date && b.status === 'confirmed'
         )
 
         dateBookings.forEach(booking => {
           const bookedStart = timeToMinutes(booking.startTime)
           const bookedEnd = timeToMinutes(booking.endTime)
 
-          // ตรวจสอบว่าเวลาทับซ้อนกันหรือไม่
-          if (
-            (startMinute >= bookedStart && startMinute < bookedEnd) ||
-            (endMinute > bookedStart && endMinute <= bookedEnd) ||
-            (startMinute <= bookedStart && endMinute >= bookedEnd)
-          ) {
-            conflicts.push({
-              date,
-              time: `${booking.startTime} - ${booking.endTime}`,
-              name: booking.name
-            })
+          if (Number.isFinite(bookedStart) && Number.isFinite(bookedEnd)) {
+            // ตรวจสอบว่าเวลาทับซ้อนกันหรือไม่
+            const hasOverlap = startMinute < bookedEnd && endMinute > bookedStart
+            
+            if (hasOverlap) {
+              conflicts.push({
+                date,
+                time: `${booking.startTime} - ${booking.endTime}`,
+                name: booking.name
+              })
+            }
           }
         })
       })
@@ -219,11 +232,14 @@ export default function AdminPage() {
       // ถ้ามี Conflict
       if (conflicts.length > 0) {
         const conflictMsg = conflicts
-          .map(c => `${thaiDate(parseLocalDate(c.date))} เวลา ${c.time} (${c.name})`)
+          .slice(0, 5) // แสดงแค่ 5 วันแรก
+          .map(c => `• ${thaiDate(parseLocalDate(c.date))} เวลา ${c.time} (${c.name})`)
           .join('\n')
         
+        const moreText = conflicts.length > 5 ? `\n... และอีก ${conflicts.length - 5} วัน` : ''
+        
         throw new Error(
-          `ไม่สามารถจองได้ เนื่องจากมีการจองในวันที่ดังต่อไปนี้:\n\n${conflictMsg}\n\nกรุณาเลือกเวลาหรือจำนวนสัปดาห์ใหม่`
+          `ไม่สามารถจองได้ เนื่องจากมีการจองซ้ำในวันที่:\n\n${conflictMsg}${moreText}\n\nกรุณาเลือกเวลาหรือจำนวนสัปดาห์ใหม่`
         )
       }
 
@@ -232,40 +248,29 @@ export default function AdminPage() {
       const duration = endMinute - startMinute
       const price = Math.round((hourlyPrice * duration) / 60)
 
-      // สร้างการจองแต่ละสัปดาห์
-      const allBookings = []
-      for (const date of bookingDates) {
-        const booking = {
-          name: name.trim(),
-          phone,
-          date,
+      // บันทึกลง Firebase ด้วย createBooking ที่มี conflict detection
+      await createBooking({
+        name: name.trim(),
+        phone,
+        date: bookingDates[0],
+        slots: bookingDates.map(date => ({
+          date, // ส่ง date สำหรับแต่ละ slot
           startTime,
           endTime,
           price
-        }
-        allBookings.push(booking)
-      }
-
-      // บันทึกลง Firebase ทีเดียว
-      await createBooking({
-        name,
-        phone,
-        date: bookingDates[0], // ใช้วันแรกเป็น reference
-        slots: allBookings.map(b => ({
-          startTime: b.startTime,
-          endTime: b.endTime,
-          price: b.price,
-          date: b.date // เพิ่ม date เข้าไปด้วย
         }))
       })
 
       setShowWeeklyBookingModal(false)
       showToast(
-        `จองสำเร็จ! จองรายสัปดาห์ทั้งหมด ${weeks} สัปดาห์ (${allBookings.length} ช่วงเวลา)`,
+        `จองสำเร็จ! จองรายสัปดาห์ทั้งหมด ${weeks} สัปดาห์ (${bookingDates.length} ช่วงเวลา)`,
         'success'
       )
     } catch (error) {
-      showToast(error.message || 'จองไม่สำเร็จ กรุณาลองใหม่', 'danger')
+      const errorMessage = error && typeof error === 'object' && error.message 
+        ? error.message 
+        : 'จองไม่สำเร็จ กรุณาลองใหม่'
+      showToast(errorMessage, 'danger')
     }
   }
 
@@ -594,22 +599,19 @@ function WeeklyBookingModal({ isOpen, onClose, onConfirm }) {
       newErrors.startDate = 'กรุณาเลือกวันที่เริ่มต้น'
     }
 
-    // แปลงเวลาเป็นนาที (รองรับ 24:00)
-    const parseTime = (timeStr) => {
-      const [hour, minute] = timeStr.split(':').map(Number)
-      return (hour * 60) + minute
-    }
+    // ใช้ timeToMinutes() ที่รองรับ 24:00 แล้ว
+    const startMinute = timeToMinutes(formData.startTime)
+    const endMinute = timeToMinutes(formData.endTime)
 
-    const startMinute = parseTime(formData.startTime)
-    const endMinute = parseTime(formData.endTime)
-
-    if (endMinute <= startMinute) {
+    if (!Number.isFinite(startMinute) || !Number.isFinite(endMinute)) {
+      newErrors.time = 'เวลาที่เลือกไม่ถูกต้อง'
+    } else if (endMinute <= startMinute) {
       newErrors.time = 'เวลาสิ้นสุดต้องมากกว่าเวลาเริ่มต้น'
     } else if (endMinute - startMinute < 30) {
       newErrors.time = 'ต้องจองอย่างน้อย 30 นาที'
     }
 
-    if (formData.weeks < 1 || formData.weeks > 52) {
+    if (!Number.isInteger(formData.weeks) || formData.weeks < 1 || formData.weeks > 52) {
       newErrors.weeks = 'จำนวนสัปดาห์ต้องอยู่ระหว่าง 1-52'
     }
 
@@ -632,14 +634,13 @@ function WeeklyBookingModal({ isOpen, onClose, onConfirm }) {
   }
 
   const calculateTotalPrice = () => {
-    // แปลงเวลาเป็นนาที (รองรับ 24:00)
-    const parseTime = (timeStr) => {
-      const [hour, minute] = timeStr.split(':').map(Number)
-      return (hour * 60) + minute
-    }
+    // ใช้ timeToMinutes() ที่รองรับ 24:00 แล้ว
+    const startMinute = timeToMinutes(formData.startTime)
+    const endMinute = timeToMinutes(formData.endTime)
 
-    const startMinute = parseTime(formData.startTime)
-    const endMinute = parseTime(formData.endTime)
+    if (!Number.isFinite(startMinute) || !Number.isFinite(endMinute) || endMinute <= startMinute) {
+      return 0
+    }
 
     const hourlyPrice = startMinute < (18 * 60) ? PRICE_DAY : PRICE_NIGHT
     const duration = endMinute - startMinute
