@@ -1,10 +1,55 @@
 import { Link } from 'react-router-dom'
 import HeroSection from '../components/HeroSection'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import AdminLoginModal from '../components/AdminLoginModal'
+import PhotoGallery from '../components/PhotoGallery'
 
 export default function HomePage() {
   const [showAdminModal, setShowAdminModal] = useState(false)
+  const [stadiumImages, setStadiumImages] = useState([])
+
+  useEffect(() => {
+    // โหลดรูปภาพทั้งหมดจาก Stadium folder โดยอัตโนมัติ (100% Dynamic)
+    const loadStadiumImages = () => {
+      // ใช้ Vite's import.meta.glob เพื่อโหลดไฟล์ทั้งหมดใน public/Stadium
+      // รองรับ .jpg, .jpeg, .png, .webp
+      const imageModules = import.meta.glob('/public/Stadium/*.{jpg,jpeg,png,webp}', { 
+        eager: true,
+        query: '?url',
+        import: 'default'
+      })
+
+      // แปลง modules เป็น array
+      const images = Object.keys(imageModules).map((path) => {
+        // ดึงชื่อไฟล์ออกมา เช่น /public/Stadium/event1.jpg -> event1.jpg
+        const filename = path.split('/').pop()
+        
+        // แปลงชื่อไฟล์เป็นข้อความที่อ่านง่าย
+        const displayName = filename
+          .replace(/\.(jpg|jpeg|png|webp)$/i, '')
+          .replace(/_/g, ' ')
+          .replace(/(\d+)/g, ' $1')
+          .trim()
+          .split(' ')
+          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(' ')
+
+        return {
+          src: `/Stadium/${filename}`,
+          alt: `VAR วิวตาล อารีน่า - ${displayName}`,
+          caption: displayName,
+          filename: filename // เก็บชื่อไฟล์สำหรับเรียงลำดับ
+        }
+      })
+
+      // เรียงตามชื่อไฟล์แบบ A-Z
+      images.sort((a, b) => a.filename.localeCompare(b.filename))
+
+      setStadiumImages(images)
+    }
+
+    loadStadiumImages()
+  }, [])
 
   return (
     <div className="app-shell">
@@ -18,8 +63,16 @@ export default function HomePage() {
               ยินดีต้อนรับสู่ VAR วิวตาล อารีน่า
             </h2>
             <p style={{ fontSize: '1.25rem', color: '#666', maxWidth: '800px', margin: '0 auto' }}>
-              สนามฟุตบอลหญ้าเทียมคุณภาพสูงใจกลางเมืองเพชรบุรี พร้อมบริการครบวงจร
+              สนามฟุตบอลหญ้าเทียมในจังหวัดเพชรบุรี พร้อมบริการครบวงจร
             </p>
+          </div>
+
+          {/* Photo Gallery Section */}
+          <div style={{ marginBottom: '4rem' }}>
+            <PhotoGallery 
+              images={stadiumImages}
+              title="📸 บรรยากาศสนามและกิจกรรม"
+            />
           </div>
 
           {/* Features Grid */}
