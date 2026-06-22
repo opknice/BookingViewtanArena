@@ -57,7 +57,7 @@ export default function ContactPage() {
               </div>
 
                           <div className="contact-map">
-              <p className="page-subtitle">📍 VAR วิวตาล อารีน่า - สนามฟุตบอลหญ้าเทียม เพชรบุรี</p>
+              <p className="page-subtitle">📍 VAR วิวตาล อารีน่า - สนามฟุตบอลหญ้าเทียม เพชรบุรี.</p>
               
               <div className="map-container">
                 <iframe
