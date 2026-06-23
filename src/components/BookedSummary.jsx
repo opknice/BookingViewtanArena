@@ -32,7 +32,7 @@ export default function BookedSummary({ bookedMap }) {
               {item.startTime} - {item.endTime} น.
             </span>
             <span className="booked-summary-name">
-              {item.name ? `คุณ ${item.name}` : 'ไม่ระบุชื่อ'}
+              {item.name || 'ไม่ระบุชื่อ'}
             </span>
           </div>
         ))}
